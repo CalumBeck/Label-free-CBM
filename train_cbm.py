@@ -196,8 +196,8 @@ def train_cbm_and_save(args):
         val_ds = TensorDataset(val_c,val_y)
 
 
-    indexed_train_loader = DataLoader(indexed_train_ds, batch_size=args.saga_batch_size, shuffle=True)
-    val_loader = DataLoader(val_ds, batch_size=args.saga_batch_size, shuffle=False)
+    indexed_train_loader = DataLoader(indexed_train_ds, batch_size=args.saga_batch_size, shuffle=True, num_workers=2)
+    val_loader = DataLoader(val_ds, batch_size=args.saga_batch_size, shuffle=False, num_workers=2)
 
     # Make linear model and zero initialize
     linear = torch.nn.Linear(train_c.shape[1],len(classes)).to(args.device)
