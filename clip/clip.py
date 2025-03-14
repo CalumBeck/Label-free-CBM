@@ -235,3 +235,14 @@ def tokenize(texts: Union[str, List[str]], context_length: int = 77, truncate: b
         result[i, :len(tokens)] = torch.tensor(tokens)
 
     return result
+
+def similarity_score(clip_model, image, target_features):
+
+    image_features = clip_model.encode_image(image)
+
+    image_features_norm = image_features.norm(dim=-1, keepdim=True)
+    image_features_new = image_features / image_features_norm
+    target_features_norm = target_features.norm(dim=-1, keepdim=True)
+    target_features_new = target_features / target_features_norm
+
+    return image_features_new[0].dot(target_features_new[0])*100
